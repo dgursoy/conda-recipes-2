@@ -12,6 +12,7 @@ requirements:
   build:
     - python
     - setuptools
+
   run:
     - python
     - numpy
@@ -22,8 +23,10 @@ requirements:
     - tifffile
 
 test:
+  # Python imports
   requires:
     - nose
+
   imports:
     - tomopy
     - tomopy.io
@@ -39,3 +42,7 @@ about:
   home: http://tomopy.readthedocs.org
   license: BSD
   summary: 'Tomographic reconstruction in Python'
+
+# See
+# http://docs.continuum.io/conda/build.html for
+# more information about meta.yaml

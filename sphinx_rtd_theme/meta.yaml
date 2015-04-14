@@ -18,6 +18,7 @@ requirements:
     - sphinx >=1.1
 
 test:
+  # Python imports
   imports:
     - sphinx_rtd_theme
 
@@ -25,3 +26,7 @@ about:
   home: https://github.com/snide/sphinx_rtd_theme/
   license: BSD License
   summary: 'ReadTheDocs.org theme for Sphinx, 2013 version.'
+
+# See
+# http://docs.continuum.io/conda/build.html for
+# more information about meta.yaml

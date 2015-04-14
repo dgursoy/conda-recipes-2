@@ -1,12 +1,15 @@
 package:
-  name: tifffile
-  version: 2014.08.24
+  name: edffile
+  version: '1.6'
+  
+build:
+  number: 0
 
 requirements:
   build:
     - python
-    - numpy
-
+    - setuptools
+ 
   run:
     - python
     - numpy
@@ -14,12 +17,12 @@ requirements:
 test:
   # Python imports
   imports:
-    - tifffile
+    - EdfFile
 
 about:
+  home: http://pymca.sourceforge.net/
   license: BSD
-  home: http://www.lfd.uci.edu/~gohlke/
-  summary: 'Read and write image data from and to TIFF files'
+  summary: 'Reader for EDF files part of the PyMCA x-ray fluorescence toolkit'
 
 # See
 # http://docs.continuum.io/conda/build.html for

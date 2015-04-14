@@ -11,11 +11,13 @@ requirements:
   build:
     - python
     - setuptools
+
   run:
     - python
     - numpy
 
 test:
+  # Python imports
   imports:
     - pywt
 
@@ -23,4 +25,7 @@ about:
   home: http://www.pybytes.com/pywavelets/
   license:  MIT License
   summary: 'Wavelet transform module'
-  
+
+# See
+# http://docs.continuum.io/conda/build.html for
+# more information about meta.yaml

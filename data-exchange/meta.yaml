@@ -1,0 +1,43 @@
+package:
+  name: data-exchange
+  version: '0.1'
+
+source:
+  git_url: https://github.com/decarlof/data-exchange.git
+  
+build:
+  number: 0
+
+requirements:
+  build:
+    - python
+    - setuptools
+ 
+  run:
+    - python
+    - scipy
+    - pillow
+    - h5py
+    - tifffile
+    - edffile
+    - spefile
+    - olefile
+    - netcdf4
+    - dxfile
+    - netcdf4
+    - matplotlib
+    - pyhdf
+
+test:
+  # Python imports
+  imports:
+    - dataexchange
+
+about:
+  home: http://dataexchange.readthedocs.org
+  license: BSD
+  summary: 'Readers for various file formats. Part of tomopy a set of python routines for data analysis of x-ray tomography experiments'
+
+# See
+# http://docs.continuum.io/conda/build.html for
+# more information about meta.yaml

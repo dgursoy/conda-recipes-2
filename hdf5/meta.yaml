@@ -13,10 +13,15 @@ build:
 requirements:
   build:
     - zlib
+
   run:
     - zlib
 
 about:
   home: http://www.hdfgroup.org/HDF5/
   license: BSD
-  summary: 'Hierarchical Data Format (HDF)'
+  summary: 'Hierarchical Data Format (HDF) is a set of file formats designed to store and organize large amounts of numerical data'
+
+# See
+# http://docs.continuum.io/conda/build.html for
+# more information about meta.yaml

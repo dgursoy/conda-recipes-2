@@ -1,0 +1,29 @@
+package:
+  name: dxfile
+  version: '0.1'
+  
+build:
+  number: 0
+
+requirements:
+  build:
+    - python
+    - setuptools
+ 
+  run:
+    - python
+    - h5py
+
+test:
+  # Python imports
+  imports:
+    - dxfile
+
+about:
+  home: http://dataexchange.readthedocs.org
+  license: BSD
+  summary: 'Reader for Data Exchange files part of tomopy a set of python routines for data analysis of x-ray tomography experiments'
+
+# See
+# http://docs.continuum.io/conda/build.html for
+# more information about meta.yaml

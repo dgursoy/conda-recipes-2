@@ -1,7 +1,8 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 from __future__ import print_function
 
-from distutils.core import setup
-from distutils.extension import Extension
+from setuptools import setup, Extension
 import numpy
 
 

@@ -16,6 +16,7 @@ requirements:
     - setuptools
     - numpy
     - six
+
   run:
     - python
     - numpy
@@ -27,8 +28,10 @@ requirements:
     - netcdf4
 
 test:
+  # Python imports
   requires:
     - nose
+
   imports:
      - skxray
      - skxray.core
@@ -49,3 +52,7 @@ test:
 about:
   home: http://Nikea.github.io/scikit-xray/
   license: 3-Clause BSD
+
+# See
+# http://docs.continuum.io/conda/build.html for
+# more information about meta.yaml
