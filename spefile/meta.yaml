@@ -1,9 +1,6 @@
 package:
   name: spefile
   version: '1.6'
-
-source:
-  git_url: https://github.com/decarlof/spefile
   
 build:
   number: 0
