@@ -1,6 +1,6 @@
 package:
-  name: spefile
-  version: '1.6'
+  name: dm3lib
+  version: '1.1'
   
 build:
   number: 0
@@ -13,16 +13,18 @@ requirements:
   run:
     - python
     - numpy
+    - scipy
+    - pillow
 
 test:
   # Python imports
   imports:
-    - spefile
+    - DM3lib
 
 about:
-  home: https://pythonhosted.org/pyspec/
+  home: microscopies.med.univ-tours.fr/pydm3reader
   license: BSD
-  summary: 'Reader for SPE files part of pyspec a set of python routines for data analysis of x-ray scattering experiments'
+  summary: 'Python module for parsing GATAN DM3 (DigitalMicrograph) files.'
 
 # See
 # http://docs.continuum.io/conda/build.html for
