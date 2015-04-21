@@ -1,14 +1,27 @@
 /* tifffile.c
+
 A Python C extension module for decoding PackBits and LZW encoded TIFF data.
+
 Refer to the tifffile.py module for documentation and tests.
+
 :Author:
   `Christoph Gohlke <http://www.lfd.uci.edu/~gohlke/>`_
+
 :Organization:
   Laboratory for Fluorescence Dynamics, University of California, Irvine
-:Version: 2013.11.05
+
+:Version: 2014.10.10
+
+Requirements
+------------
+* `CPython 2.7 or 3.4 <http://www.python.org>`_
+* `Numpy 1.8 <http://www.numpy.org>`_
+* A Python distutils compatible C compiler  (build)
+
 Install
 -------
 Use this Python distutils setup script to build the extension module::
+
   # setup.py
   # Usage: ``python setup.py build_ext --inplace``
   from distutils.core import setup, Extension
@@ -16,14 +29,17 @@ Use this Python distutils setup script to build the extension module::
   setup(name='_tifffile',
         ext_modules=[Extension('_tifffile', ['tifffile.c'],
                                include_dirs=[numpy.get_include()])])
+
 License
 -------
 Copyright (c) 2008-2014, Christoph Gohlke
 Copyright (c) 2008-2014, The Regents of the University of California
 Produced at the Laboratory for Fluorescence Dynamics
 All rights reserved.
+
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
+
 * Redistributions of source code must retain the above copyright
   notice, this list of conditions and the following disclaimer.
 * Redistributions in binary form must reproduce the above copyright
@@ -32,6 +48,7 @@ modification, are permitted provided that the following conditions are met:
 * Neither the name of the copyright holders nor the names of any
   contributors may be used to endorse or promote products derived
   from this software without specific prior written permission.
+
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -45,7 +62,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 */
 
-#define _VERSION_ "2013.11.05"
+#define _VERSION_ "2014.10.10"
 
 #define WIN32_LEAN_AND_MEAN
 #define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
@@ -142,9 +159,12 @@ unsigned char bitmask(const int itemsize) {
 }
 
 /** Unpack sequence of tigthly packed 1-32 bit integers.
+
 Native byte order will be returned.
+
 Input data array should be padded to the next 16, 32 or 64-bit boundary
 if itemsize not in (1, 2, 4, 8, 16, 24, 32, 64).
+
 */
 int unpackbits(
     unsigned char *data,
@@ -909,7 +929,8 @@ init_tifffile(void)
     PyObject *module;
 
     char *doc = (char *)PyMem_Malloc(sizeof(module_doc) + sizeof(_VERSION_));
-    PyOS_snprintf(doc, sizeof(doc), module_doc, _VERSION_);
+    PyOS_snprintf(doc, sizeof(module_doc) + sizeof(_VERSION_),
+                  module_doc, _VERSION_);
 
 #if PY_MAJOR_VERSION >= 3
     moduledef.m_doc = doc;
@@ -943,3 +964,4 @@ init_tifffile(void)
     return module;
 #endif
 }
+
