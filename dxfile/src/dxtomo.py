@@ -85,7 +85,7 @@ class File(h5py.File):
     def __init__(self, *args, **kwargs):
         super(File, self).__init__(*args, **kwargs)
 
-        if kwargs['mode'] in ['w', 'a']: #New File
+        if kwargs['mode'] in ['w', 'a']: # New File
             if not 'exchange' in self.keys():
                 self.create_top_level_group('exchange')
         else:
@@ -157,11 +157,11 @@ class File(h5py.File):
                     if 'dataset_opts' in getattr(dexen, ds_name).keys():
                         opts = getattr(dexen, ds_name)['dataset_opts']
                     else:
-                        opts={}
+                        opts = {}
                     try:
                         ds = self['/'.join([root, getattr(dexen, 'entry_name')])].create_dataset(ds_name, data=getattr(dexen, ds_name)['value'], **opts)
                         for key in getattr(dexen, ds_name).keys():
-                            if key in ['value', 'docstring','dataset_opts']:
+                            if key in ['value', 'docstring', 'dataset_opts']:
                                 pass
                             else:
                                 ds.attrs[key] = getattr(dexen, ds_name)[key]
@@ -914,12 +914,12 @@ class Entry(object):
                 'value': None,
                 'units': 'mm',
                 'docstring': 'Vector containing the position of the sample axis x at each projection image collection.'
-            },        
+            },
             'sample_position_y': {
                 'value': None,
                 'units': 'mm',
                 'docstring': 'Vector containing the position of the sample axis y at each projection image collection.'
-            },        
+            },
             'sample_position_z': {
                 'value': None,
                 'units': 'mm',
@@ -929,47 +929,47 @@ class Entry(object):
                 'value': None,
                 'units': 'pixels',
                 'docstring': 'Vector containing the shift of the sample axis x at each projection on the detector plane.'        
-            },        
+            },
             'sample_image_shift_y': {
                 'value': None,
                 'units': 'pixels',
                 'docstring': 'Vector containing the shift of the sample axis y at each projection on the detector plane.'        
-            },        
+            },
             'image_theta': {
                 'value': None,
                 'units': 'degree',
                 'docstring': 'Vector containing the rotary stage angular position read from the encoder at each image.'        
-            },        
+            },
             'scan_index': {
                 'value': None,
                 'units': None,
                 'docstring': 'Vector containin for each image the identifier assigned by beamline controls to each individual series of images or scan.'        
-            },        
+            },
             'scan_date': {
                 'value': None,
                 'units': None,
                 'docstring': 'Vector containin for each image the wall date/time at start of scan in iso 8601.'        
-            },        
+            },
             'image_date': {
                 'value': None,
                 'units': 'time',
                 'docstring': 'Vector containing the date/time each image was acquired in iso 8601..'        
-            },        
+            },
             'time_stamp': {
                 'value': None,
                 'units': None,
                 'docstring': 'Vector containin for each image the relative time since scan_date in 1e-7 seconds.'        
-            },        
+            },
             'image_number': {
                 'value': None,
                 'units': None,
                 'docstring': 'Vector containin for each image the the image serial number as assigned by the camera. Unique for each individual scan. Always starts at 0.'        
-            },        
+            },
             'image_exposure_time': {
                 'value': None,
                 'units': None,
                 'docstring': 'Vector containin for each image the the measured exposure time in 1e-7 seconds (0.1us)'        
-            },        
+            },
             'image_is_complete': {
                 'value': None,
                 'units': None,
@@ -980,10 +980,8 @@ class Entry(object):
     def _generate_classes(self):
 
         """
-        .. method:: generate_classes(self)
-
-            This method is used to turn the Entry._entry_definitions into generate_classes
-            which can be instantitated for hold data.
+        This method is used to turn the Entry._entry_definitions into generate_classes
+        which can be instantitated for hold data.
         """
 
         def __init__(self, **kwargs):

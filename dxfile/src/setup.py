@@ -12,5 +12,5 @@ setup(
         'python',
         'h5py',
         ),
-    version = '1.4',
+    version = '1.6',
 )
