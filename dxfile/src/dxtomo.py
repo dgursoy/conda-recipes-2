@@ -50,6 +50,7 @@
 Subclasses the h5py module for interacting with Data Exchange files.
 """
 
+
 from __future__ import print_function
 import h5py
 import os
@@ -62,10 +63,9 @@ __copyright__ = 'Copyright (c) 2015, UChicago Argonne, LLC.'
 __docformat__ = 'restructuredtext en'
 __platform__ = 'Unix'
 __version__ = '1.5'
-__all__ = ['DataExchangeFile', 'DataExchangeEntry']
+__all__ = ['File', 'Entry']
 
-
-class DataExchangeFile(h5py.File):
+class File(h5py.File):
 
     """
     Interact with Data Exchange files.
@@ -83,9 +83,9 @@ class DataExchangeFile(h5py.File):
     """
 
     def __init__(self, *args, **kwargs):
-        super(DataExchangeFile, self).__init__(*args, **kwargs)
+        super(File, self).__init__(*args, **kwargs)
 
-        if kwargs['mode'] in ['w', 'a']:  # New File
+        if kwargs['mode'] in ['w', 'a']: #New File
             if not 'exchange' in self.keys():
                 self.create_top_level_group('exchange')
         else:
@@ -94,9 +94,7 @@ class DataExchangeFile(h5py.File):
                 assert 'implements' in self.keys()
                 assert 'exchange' in self.keys()
             except AssertionError:
-                print(
-                    'WARNING: File does not have either/both "implements" or "exchange" group')
-
+                print('WARNING: File does not have either/both "implements" or "exchange" group')
 
     def __repr__(self):
         if not self.id:
@@ -108,7 +106,7 @@ class DataExchangeFile(h5py.File):
             if isinstance(filename, bytes):  # Can't decode fname
                 filename = filename.decode('utf8', 'replace')
             r = u'<DataExchange file "%s" (mode %s)>' % (os.path.basename(filename),
-                                                         self.mode)
+                                                 self.mode)
         if py3:
             return r
         return r.encode('utf8')
@@ -125,11 +123,9 @@ class DataExchangeFile(h5py.File):
             implements = self['/implements'].value
             if group_name not in implements.split(':'):
                 del self['implements']
-                self.create_dataset(
-                    'implements', data=':'.join([implements, group_name]))
+                self.create_dataset('implements', data=':'.join([implements, group_name]))
         except KeyError:
             self.create_dataset('implements', data=group_name)
-
 
     def add_entry(self, dexen_ob, overwrite=False):
         """
@@ -154,52 +150,43 @@ class DataExchangeFile(h5py.File):
             self.require_group('/'.join([root, getattr(dexen, 'entry_name')]))
 
             dsets = [ds for ds in dir(dexen) if not ds.startswith('__')]
-            [dsets.remove(item)
-             for item in ['entry_name', 'root', 'docstring']]
+            [dsets.remove(item) for item in ['entry_name', 'root', 'docstring']]
 
             for ds_name in dsets:
                 if getattr(dexen, ds_name)['value'] is not None:
                     if 'dataset_opts' in getattr(dexen, ds_name).keys():
                         opts = getattr(dexen, ds_name)['dataset_opts']
                     else:
-                        opts = {}
+                        opts={}
                     try:
-                        ds = self['/'.join([root, getattr(dexen, 'entry_name')])].create_dataset(
-                            ds_name, data=getattr(dexen, ds_name)['value'], **opts)
+                        ds = self['/'.join([root, getattr(dexen, 'entry_name')])].create_dataset(ds_name, data=getattr(dexen, ds_name)['value'], **opts)
                         for key in getattr(dexen, ds_name).keys():
-                            if key in ['value', 'docstring', 'dataset_opts']:
+                            if key in ['value', 'docstring','dataset_opts']:
                                 pass
                             else:
                                 ds.attrs[key] = getattr(dexen, ds_name)[key]
                     except RuntimeError:
-                        # Likely cause of runtime error is dataset already
-                        # existing in file
-                        dataset_exists = ds_name in self[
-                            '/'.join([root, getattr(dexen, 'entry_name')])].keys()
+                        # Likely cause of runtime error is dataset already existing in file
+                        dataset_exists = ds_name in self['/'.join([root, getattr(dexen, 'entry_name')])].keys()
                         if dataset_exists:
                             if not overwrite:
-                                print(
-                                    'WARNING: Dataset {:s} already exists. This entry has been skipped.'.format(ds_name))
+                                print('WARNING: Dataset {:s} already exists. This entry has been skipped.'.format(ds_name))
                             else:
-                                # The overwite flag is set so delete the
-                                # existing dataset and write the new one in its
-                                # place
-                                del self[
-                                    '/'.join([root, getattr(dexen, 'entry_name'), ds_name])]
-                                ds = self['/'.join([root, getattr(dexen, 'entry_name')])].create_dataset(
-                                    ds_name, data=getattr(dexen, ds_name)['value'], **opts)
+                                # The overwite flag is set so delete the existing dataset and write the new one in its place
+                                del self['/'.join([root, getattr(dexen, 'entry_name'), ds_name])]
+                                ds = self['/'.join([root, getattr(dexen, 'entry_name')])].create_dataset(ds_name, data=getattr(dexen, ds_name)['value'], **opts)
                                 for key in getattr(dexen, ds_name).keys():
-                                    if key in ['value', 'docstring', 'dataset_opts']:
+                                    if key in ['value', 'docstring','dataset_opts']:
                                         pass
                                     else:
-                                        ds.attrs[key] = getattr(
-                                            dexen, ds_name)[key]
+                                        ds.attrs[key] = getattr(dexen, ds_name)[key]
+
 
                         else:
                             raise
 
 
-class DataExchangeEntry(object):
+class Entry(object):
 
     """
     Interact with Data Exchange files.
@@ -210,13 +197,14 @@ class DataExchangeEntry(object):
         Contains the archetypes for Data Exchange file entries.
 
     _generate_classes(self)
-        This method is used to turn the DataExchangeEntry._entry_definitions into generate_classes
+        This method is used to turn the Entry._entry_definitions into generate_classes
         which can be instantitated for hold data.
     """
 
     def __init__(self, **kwargs):
         self._entry_definitions()
         self._generate_classes()
+
 
     def _entry_definitions(self):
         """
@@ -639,7 +627,7 @@ class DataExchangeEntry(object):
             'exposure_time': {
                 'value': None,
                 'units': 's',
-                'docstring': 'The detector exposure time (s).'
+                'docstring': 'The set detector exposure time (s).'
             },
             'delay_time': {
                 'value': None,
@@ -785,8 +773,8 @@ class DataExchangeEntry(object):
                 'value': None,
                 'units': 'm',
                 'docstring': ('Calling the local unit vectors (x0; y0; z0) and the reference unit vectors (x; y; z)'
-                              'the six numbers will be [x0 . x; x0 . y; x0 . z; y0 . x; y0 . y; y0 . z] where "."" is the scalar dot'
-                              'product (cosine of the angle between the unit vectors).')
+                    'the six numbers will be [x0 . x; x0 . y; x0 . z; y0 . x; y0 . y; y0 . z] where "."" is the scalar dot'
+                    'product (cosine of the angle between the unit vectors).')
             },
         }
 
@@ -926,12 +914,12 @@ class DataExchangeEntry(object):
                 'value': None,
                 'units': 'mm',
                 'docstring': 'Vector containing the position of the sample axis x at each projection image collection.'
-            },
+            },        
             'sample_position_y': {
                 'value': None,
                 'units': 'mm',
                 'docstring': 'Vector containing the position of the sample axis y at each projection image collection.'
-            },
+            },        
             'sample_position_z': {
                 'value': None,
                 'units': 'mm',
@@ -940,19 +928,62 @@ class DataExchangeEntry(object):
             'sample_image_shift_x': {
                 'value': None,
                 'units': 'pixels',
-                'docstring': 'Vector containing the shift of the sample axis x at each projection on the detector plane.'
-            },
+                'docstring': 'Vector containing the shift of the sample axis x at each projection on the detector plane.'        
+            },        
             'sample_image_shift_y': {
                 'value': None,
                 'units': 'pixels',
-                'docstring': 'Vector containing the shift of the sample axis y at each projection on the detector plane.'
-            },
+                'docstring': 'Vector containing the shift of the sample axis y at each projection on the detector plane.'        
+            },        
+            'image_theta': {
+                'value': None,
+                'units': 'degree',
+                'docstring': 'Vector containing the rotary stage angular position read from the encoder at each image.'        
+            },        
+            'scan_index': {
+                'value': None,
+                'units': None,
+                'docstring': 'Vector containin for each image the identifier assigned by beamline controls to each individual series of images or scan.'        
+            },        
+            'scan_date': {
+                'value': None,
+                'units': None,
+                'docstring': 'Vector containin for each image the wall date/time at start of scan in iso 8601.'        
+            },        
+            'image_date': {
+                'value': None,
+                'units': 'time',
+                'docstring': 'Vector containing the date/time each image was acquired in iso 8601..'        
+            },        
+            'time_stamp': {
+                'value': None,
+                'units': None,
+                'docstring': 'Vector containin for each image the relative time since scan_date in 1e-7 seconds.'        
+            },        
+            'image_number': {
+                'value': None,
+                'units': None,
+                'docstring': 'Vector containin for each image the the image serial number as assigned by the camera. Unique for each individual scan. Always starts at 0.'        
+            },        
+            'image_exposure_time': {
+                'value': None,
+                'units': None,
+                'docstring': 'Vector containin for each image the the measured exposure time in 1e-7 seconds (0.1us)'        
+            },        
+            'image_is_complete': {
+                'value': None,
+                'units': None,
+                'docstring': 'Vector containin for each image the boolen status of: is any pixel data missing?'        
+            }
         }
 
     def _generate_classes(self):
+
         """
-        This method is used to turn the DataExchangeEntry._entry_definitions into generate_classes
-        which can be instantitated for hold data.
+        .. method:: generate_classes(self)
+
+            This method is used to turn the Entry._entry_definitions into generate_classes
+            which can be instantitated for hold data.
         """
 
         def __init__(self, **kwargs):
@@ -965,13 +996,13 @@ class DataExchangeEntry(object):
                 if entry_name.startswith('_'):
                     entry_type = getattr(self, entry_name)
                     entry_name = entry_name[1:]
-                    if entry_name not in DataExchangeEntry.__dict__.keys():
-                        entry_type['__base__'] = DataExchangeEntry
+                    if entry_name not in Entry.__dict__.keys():
+                        entry_type['__base__'] = Entry
                         entry_type['__name__'] = entry_type['entry_name']
                         entry_type['__init__'] = __init__
-                        setattr(DataExchangeEntry, entry_name, type(
-                            entry_type['entry_name'], (object,), entry_type))
+                        setattr(Entry, entry_name, type(entry_type['entry_name'], (object,), entry_type))
             except:
-                print(
-                    "Unable to create DataExchangeEntry for {:s}".format(entry_name))
+                print("Unable to create Entry for {:s}".format(entry_name))
                 raise
+
+Entry()

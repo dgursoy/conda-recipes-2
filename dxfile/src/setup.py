@@ -1,17 +1,16 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 from __future__ import print_function
 
-from setuptools import setup, Extension
+from distutils.core import setup
+from distutils.extension import Extension
 
 setup(
-    author = 'David Vine',
+    author = 'David Vine Argonne National Laboratory',
     description = 'Write data exchange files.',
-    py_modules = ['dxfile'],
+    py_modules = ['dxtomo'],
     name = 'dxfile',
     requires = (
         'python',
         'h5py',
         ),
-    version = '1.5',
+    version = '1.4',
 )
