@@ -62,7 +62,7 @@ __author__ = 'David Vine'
 __copyright__ = 'Copyright (c) 2015, UChicago Argonne, LLC.'
 __docformat__ = 'restructuredtext en'
 __platform__ = 'Unix'
-__version__ = '1.5'
+__version__ = '1.6'
 __all__ = ['File', 'Entry']
 
 class File(h5py.File):
