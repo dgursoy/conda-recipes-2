@@ -1,6 +1,9 @@
 package:
   name: dxfile
-  version: '0.2'
+  version: '0.3'
+
+source:
+  path: src
   
 build:
   number: 0
@@ -17,12 +20,13 @@ requirements:
 test:
   # Python imports
   imports:
-    - dxtomo
+    - dxfile
+    - dxfile.dxtomo
 
 about:
   home: http://dataexchange.readthedocs.org
   license: BSD
-  summary: 'Reader for Data Exchange files part of tomopy a set of python routines for data analysis of x-ray tomography experiments'
+  summary: 'Reader/Writer for Data Exchange files.'
 
 # See
 # http://docs.continuum.io/conda/build.html for
